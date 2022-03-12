@@ -3,7 +3,6 @@ const searchBtn = document.getElementById("search-button");
 searchField.addEventListener("keypress", (event) => {
   if (event.key == "Enter") {
     searchBtn.click();
-    console.log("hi");
   }
 });
 
@@ -14,36 +13,58 @@ const searchFood = () => {
   searchField.value = "";
   if (searchValue == "") {
     document.querySelector(".errMsg").innerHTML = "please write something";
-    console.log("please write something");
   } else {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`;
     fetch(url)
       .then((res) => res.json())
-      .then((data) => displaySearch(data.meals));
+      .then((data) => displaySearch(data));
   }
-  // load data
+  // load data    [displaySearch(data.meals)]
 };
-const displaySearch = (meals) => {
+const displaySearch = (data) => {
+  const meals = data.meals;
   console.log(meals);
-  const searchResult = document.getElementById("search-result");
-  searchResult.textContent = "";
-  document.querySelector(".errMsg").innerHTML = "";
+  if (meals != null) {
+    const searchResult = document.getElementById("search-result");
+    searchResult.textContent = "";
 
-  meals.forEach((meal) => {
-    // console.log(meal);
+    meals.forEach((meal) => {
+      // console.log(meal);
+      const div = document.createElement("div");
+      div.classList.add("col");
+      div.innerHTML = `
+              <div onclick="loadMealDetails(${meal.idMeal})" class="card">
+              <img src="${meal.strMealThumb}" class="card-img-top" alt="img" />
+              <div class="card-body">
+                  <h5 class="card-title">${meal.strMeal}</h5>
+                  <p class="card-text">${
+                    meal.strInstructions.slice(0, 150) + "..."
+                  }</p>
+              </div>
+              </div>
+              `;
+      searchResult.appendChild(div);
+    });
+    const displayDiv = document.getElementById("display-meal");
+    displayDiv.innerHTML = "";
+  } else {
+    // not found msg
+    const displayDiv = document.getElementById("display-meal");
     const div = document.createElement("div");
-    div.classList.add("col");
     div.innerHTML = `
-      <div onclick="loadMealDetails(${meal.idMeal})" class="card">
-      <img src="${meal.strMealThumb}" class="card-img-top" alt="img" />
-      <div class="card-body">
-          <h5 class="card-title">${meal.strMeal}</h5>
-          <p class="card-text">${meal.strInstructions.slice(0, 150) + "..."}</p>
+      <div class="row justify-content-center mt-5">
+        <div class="col-md-5 text-center">
+          <img class="notfoundImg" src="img/notFound.png" alt="img" />
+          <p class="lead text-danger">Oops There is nothing to show.</p>
+        </div>
       </div>
-      </div>
-      `;
-    searchResult.appendChild(div);
-  });
+    `;
+    displayDiv.appendChild(div);
+
+    const searchResult = document.getElementById("search-result");
+    searchResult.innerHTML = "";
+  }
+  document.querySelector(".errMsg").innerHTML = "";
 };
 
 const loadMealDetails = (mealId) => {

@@ -6,3 +6,8 @@
   width: 70%;
   margin: 0 auto;
 }
+.notfoundImg {
+  width: 5em;
+  /* margin: 0 auto; */
+  /* display: block; */
+}
