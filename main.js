@@ -12,7 +12,7 @@ const searchFood = () => {
   // clear data
   searchField.value = "";
   if (searchValue == "") {
-    document.querySelector(".errMsg").innerHTML = "please write something";
+    document.querySelector(".errMsg").innerHTML = "please write a meal name.";
   } else {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`;
     fetch(url)
@@ -23,7 +23,6 @@ const searchFood = () => {
 };
 const displaySearch = (data) => {
   const meals = data.meals;
-  console.log(meals);
   if (meals != null) {
     const searchResult = document.getElementById("search-result");
     searchResult.textContent = "";
@@ -33,7 +32,7 @@ const displaySearch = (data) => {
       const div = document.createElement("div");
       div.classList.add("col");
       div.innerHTML = `
-              <div onclick="loadMealDetails(${meal.idMeal})" class="card">
+              <div onclick="loadMealDetails(${meal.idMeal})" class="card" >
               <img src="${meal.strMealThumb}" class="card-img-top" alt="img" />
               <div class="card-body">
                   <h5 class="card-title">${meal.strMeal}</h5>
@@ -48,14 +47,15 @@ const displaySearch = (data) => {
     const displayDiv = document.getElementById("display-meal");
     displayDiv.innerHTML = "";
   } else {
-    // not found msg
     const displayDiv = document.getElementById("display-meal");
+    displayDiv.innerHTML = "";
+    // not found msg
     const div = document.createElement("div");
     div.innerHTML = `
       <div class="row justify-content-center mt-5">
         <div class="col-md-5 text-center">
           <img class="notfoundImg" src="img/notFound.png" alt="img" />
-          <p class="lead text-danger">Oops There is nothing to show.</p>
+          <p class="lead text-danger">Oops! No data found. Try with different name.</p>
         </div>
       </div>
     `;
@@ -76,8 +76,9 @@ const loadMealDetails = (mealId) => {
 };
 const displayMealDetail = (meal) => {
   const mealDiv = document.getElementById("display-meal");
+  mealDiv.innerHTML = "";
   const div = document.createElement("div");
-  div.classList.add("card");
+  div.classList.add("card", "popUpCard");
   div.innerHTML = `
   <img src="${meal.strMealThumb}" class="card-img-top" alt="..." />
     <div class="card-body">

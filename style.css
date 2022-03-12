@@ -2,12 +2,23 @@
   height: 200px;
   object-fit: cover;
 }
-#display-meal .card {
+/* #display-meal .card {
   width: 70%;
   margin: 0 auto;
-}
+} */
 .notfoundImg {
   width: 5em;
   /* margin: 0 auto; */
   /* display: block; */
+}
+.col .card {
+  cursor: pointer;
+}
+.popUpCard {
+  position: fixed;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }
