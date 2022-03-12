@@ -76,6 +76,7 @@ const loadMealDetails = (mealId) => {
 };
 const displayMealDetail = (meal) => {
   const mealDiv = document.getElementById("display-meal");
+
   mealDiv.innerHTML = "";
   const div = document.createElement("div");
   div.classList.add("card", "popUpCard");
@@ -88,15 +89,33 @@ const displayMealDetail = (meal) => {
     </div>
     <div class="close"></div>
   `;
+
   mealDiv.appendChild(div);
+  // adding class for transparent outside
+  mealDiv.classList.add("modalDisplay");
+
+  // pop card or main modal box
+  const popUpModalCard = document.querySelector(".popUpCard");
 
   //close modal script
   const closeModalBtn = document.querySelector(".close");
   closeModalBtn.addEventListener("click", () => {
-    const popUpModalCard = document.querySelector(".popUpCard");
     popUpModalCard.style.display = "none";
+    mealDiv.classList.remove("modalDisplay");
   });
 
+  //stop closing when someone click main modal box -
+  // bcz if i click transparent outside it will come to the child
+  popUpModalCard.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  // closing div when someone click transparent outside div
+  const modalDisplay = document.querySelector(".modalDisplay");
+  modalDisplay.addEventListener("click", () => {
+    popUpModalCard.style.display = "none";
+    mealDiv.classList.remove("modalDisplay");
+  });
   // ===============================
   // window.addEventListener("scroll", () => {
   //   const popUpModalCard = document.querySelector(".popUpCard");
