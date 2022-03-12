@@ -66,5 +66,8 @@
     transform: translate(0px, 0px);
     height: 100% !important;
     overflow-y: scroll;
+    -webkit-overflow-y: scroll;
+
+    display: none;
   }
 }
