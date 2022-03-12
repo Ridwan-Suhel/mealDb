@@ -13,6 +13,7 @@ const searchFood = () => {
   // clear data
   searchField.value = "";
   if (searchValue == "") {
+    document.querySelector(".errMsg").innerHTML = "please write something";
     console.log("please write something");
   } else {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchValue}`;
@@ -23,8 +24,10 @@ const searchFood = () => {
   // load data
 };
 const displaySearch = (meals) => {
+  console.log(meals);
   const searchResult = document.getElementById("search-result");
   searchResult.textContent = "";
+  document.querySelector(".errMsg").innerHTML = "";
 
   meals.forEach((meal) => {
     // console.log(meal);
