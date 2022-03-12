@@ -80,12 +80,26 @@ const displayMealDetail = (meal) => {
   const div = document.createElement("div");
   div.classList.add("card", "popUpCard");
   div.innerHTML = `
-  <img src="${meal.strMealThumb}" class="card-img-top" alt="..." />
+    <img src="${meal.strMealThumb}" class="card-img-top" alt="..." />
     <div class="card-body">
-    <h5 class="card-title">${meal.strMeal}</h5>
-    <p class="card-text">${meal.strInstructions}</p>
-    <a href="${meal.strYoutube}" class="card-link">Watch Tutorial</a>
-  </div>
+      <h5 class="card-title">${meal.strMeal}</h5>
+      <p class="card-text">${meal.strInstructions}</p>
+      <a href="${meal.strYoutube}" class="card-link">Watch Tutorial</a>
+    </div>
+    <div class="close"></div>
   `;
   mealDiv.appendChild(div);
+
+  //close modal script
+  const closeModalBtn = document.querySelector(".close");
+  closeModalBtn.addEventListener("click", () => {
+    const popUpModalCard = document.querySelector(".popUpCard");
+    popUpModalCard.style.display = "none";
+  });
+
+  // ===============================
+  // window.addEventListener("scroll", () => {
+  //   const popUpModalCard = document.querySelector(".popUpCard");
+  //   popUpModalCard.classList.toggle("sticky", window.scrollY > 0);
+  // });
 };
